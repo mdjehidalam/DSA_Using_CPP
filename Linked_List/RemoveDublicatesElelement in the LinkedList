@@ -82,3 +82,79 @@ int main()
 
     
 }
+
+
+
+second way to remove dublicates for sorted likedList
+
+ #include<bits/stdc++.h>
+ using namespace std; 
+class Node {
+    public: 
+    int data;
+    Node* next;
+    Node(int data)
+    {
+        this->data = data;
+        this->next = NULL;
+
+    }
+};
+Node* input()
+{
+    int data;
+    cin>>data;
+    Node* head = NULL; // linked List empty
+    Node* tail = NULL ;// LinkedList empty
+    while(data != -1)
+    {
+        Node* n = new Node(data);
+        if(head == NULL )
+        {
+            head = n;
+            tail = n; 
+        }else{
+            tail ->next = n;
+            tail = n;
+        }
+        cin>>data;
+    }
+    return head;
+}
+
+void print(Node* head )
+{
+    while(head)
+    {
+        cout<<head->data<<"->";
+        head = head->next;
+    }
+    cout<<"NULL"<<endl;
+}
+ 
+ Node* removeDublicate(Node* head)
+ {
+      Node* previous = head;
+      Node* current = head->next;
+      while(current)
+      {
+          if(previous->data == current->data)
+          {
+               previous->next = current->next;
+               delete current;
+               current = previous->next;
+              
+          }else{
+              previous =current;
+              current =current->next;
+          }
+          
+      }
+      return head;
+ }
+int main()
+{
+    Node* L1 = input();
+    L1 = removeDublicate(L1);
+    print(L1);
+}
