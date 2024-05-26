@@ -1,0 +1,94 @@
+//DOUBLY LINKED LIST 
+
+#include<bits/stdc++.h>
+using namespace std;
+class Node
+{
+    public: 
+    int data;
+    Node* next;
+    Node* previous;
+    Node(int data)
+    {
+        this->data = data;
+        this->next = NULL;
+        this->previous = NULL;
+    }
+};
+
+Node* input()
+{
+    Node* head=NULL;
+    Node* tail = NULL;
+    int data;
+    cin>>data;
+    while(data != -1)
+    {
+        Node* temp = new Node(data);
+        if(head == NULL)
+        {
+            head = temp;
+            tail = temp;
+        }else{
+            // insert at the end 
+            tail->next = temp;
+            temp->previous = tail;
+            tail = temp;
+        }
+        cin>>data;
+    }
+    return head;
+}
+
+
+void print(Node* head)
+{
+    while(head != NULL)
+    {
+        cout<<head->data<<" ";
+        head = head->next;
+    }
+     
+}
+Node* insertAtAnyPostion(int index, Node* head, int data)
+{
+    
+    if(index <= 0) return head;
+    
+    if(index == 1)
+    {
+        Node* temp = new Node(data);
+        temp->next = head;
+        head->previous = temp;
+        head  = temp ;
+        return head;
+    }
+    index = index -2;
+    Node* copyHead = head;
+    while(index --)
+    {
+        head = head->next;
+    }
+    if(head)
+    {
+        Node* temp = new Node(data);
+        temp->next = head->next;
+        temp->previous = head;
+        head->next = temp;
+        head = temp;
+        return copyHead;
+ 
+    }
+    return copyHead;
+   
+}
+
+int main()
+{
+    Node* head = input();
+    //print(head);
+    int index, data;
+    cin>>index>>data;
+    head = insertAtAnyPostion(index,head,data);
+    print(head);
+}
