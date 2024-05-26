@@ -1,0 +1,91 @@
+//DOUBLY LINKED LIST 
+
+#include<bits/stdc++.h>
+using namespace std;
+class Node
+{
+    public: 
+    int data;
+    Node* next;
+    Node* previous;
+    Node(int data)
+    {
+        this->data = data;
+        this->next = NULL;
+        this->previous = NULL;
+    }
+};
+
+Node* input()
+{
+    Node* head=NULL;
+    Node* tail = NULL;
+    int data;
+    cin>>data;
+    while(data != -1)
+    {
+        Node* temp = new Node(data);
+        if(head == NULL)
+        {
+            head = temp;
+            tail = temp;
+        }else{
+            // insert at the end 
+            tail->next = temp;
+            temp->previous = tail;
+            tail = temp;
+        }
+        cin>>data;
+    }
+    return head;
+}
+
+
+void print(Node* head)
+{
+    while(head!= NULL)
+    {
+        cout<<head->data<<" ";
+        head = head->next;
+    }
+  
+}
+
+Node* DeleteAtAnyPosition(int index, Node* head)
+{
+    // check validation 
+    if(head == NULL) return head;
+    if(index<0) return head;
+    if(index == 0){
+        Node* temp = head;
+        head = head->next;
+        head->previous = NULL;
+        delete temp;
+        return head;
+    }
+    index = index -1;
+    Node* copyHead = head;
+    while(index --)
+    {
+        head = head->next;
+    }
+    if(head)
+    {
+        Node* temp = head->next;
+        head->previous = head;
+        head->next = temp->next;
+        delete temp;
+        return copyHead;
+    }
+    return copyHead;
+}
+int main()
+{
+    Node* head = input();
+   // print(head);
+    int index;
+    cin>>index;
+    head = DeleteAtAnyPosition(index,head);
+    print(head);
+    
+}
