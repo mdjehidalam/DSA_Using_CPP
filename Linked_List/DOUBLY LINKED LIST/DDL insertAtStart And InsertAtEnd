@@ -1,0 +1,101 @@
+//DOUBLY LINKED LIST 
+
+#include<bits/stdc++.h>
+using namespace std;
+class Node
+{
+    public: 
+    int data;
+    Node* next;
+    Node* previous;
+    Node(int data)
+    {
+        this->data = data;
+        this->next = NULL;
+        this->previous = NULL;
+    }
+};
+
+Node* input()
+{
+    Node* head=NULL;
+    Node* tail = NULL;
+    int data;
+    cin>>data;
+    while(data != -1)
+    {
+        Node* temp = new Node(data);
+        if(head == NULL)
+        {
+            head = temp;
+            tail = temp;
+        }else{
+            // insert at the end 
+            tail->next = temp;
+            temp->previous = tail;
+            tail = temp;
+        }
+        cin>>data;
+    }
+    return head;
+}
+
+
+void print(Node* head)
+{
+    while(head->next != NULL)
+    {
+        cout<<head->data<<" ";
+        head = head->next;
+    }
+    cout<<head->data<<endl;
+    cout<<endl;
+    while(head != NULL)
+    {
+        cout<<head->data<<" ";
+        head = head->previous;
+    }
+    return ;
+}
+Node* insertAtStart(Node* head)
+{
+    int data;
+    cin>>data;
+    Node* temp = new Node(data);
+    temp->next = head;
+    head->previous = temp;
+    head = temp;
+    return head;
+}
+
+
+Node* insertAtEnd(Node* head)
+{
+    int data;
+    cin>>data;
+    Node* current = head;
+    if(head == NULL)
+    {
+        Node* temp = new Node(data);
+        head = temp;
+    }
+    while(current->next != NULL)
+    {
+        current = current->next;
+    }
+    Node* temp = new Node(data);
+    current->next = temp;
+    temp->previous = current;
+    current = temp;
+    return head;
+    
+}
+int main()
+{
+    Node* head = input();
+    //print(head);
+    head = insertAtStart(head);
+    //print(head);
+    head = insertAtEnd(head);
+    print(head);
+}
